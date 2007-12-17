@@ -13,7 +13,6 @@ Patch0:		%{name}-am_ac.patch
 BuildRequires:	libtool
 BuildRequires:	automake1.7
 BuildRequires:	autoconf2.5
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Radiusclient is a /bin/login replacement which gets called by a getty
