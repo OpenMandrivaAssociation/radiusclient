@@ -4,7 +4,7 @@
 Summary:	Radiusclient library and tools
 Name:		radiusclient
 Version:	0.3.2
-Release:	%mkrel 8
+Release:	%mkrel 9
 License:	BSD
 Group:		System/Libraries
 URL:		ftp://ftp.cityline.net/pub/radiusclient/
