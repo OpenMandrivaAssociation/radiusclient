@@ -1,18 +1,17 @@
 %define	major 0
 %define libname	%mklibname radius %{major}
+%define develname %mklibname radius -d
+%define sdevelname %mklibname radius -d -s
 
 Summary:	Radiusclient library and tools
 Name:		radiusclient
 Version:	0.3.2
-Release:	%mkrel 11
+Release:	%mkrel 12
 License:	BSD
 Group:		System/Libraries
 URL:		ftp://ftp.cityline.net/pub/radiusclient/
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		%{name}-am_ac.patch
-BuildRequires:	libtool
-BuildRequires:	automake1.7
-BuildRequires:	autoconf2.5
 BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
@@ -42,33 +41,33 @@ Group:          System/Libraries
 %description -n	%{libname}
 Libraries required for Radiusclient
 
-%package -n	%{libname}-devel
+%package -n	%{develname}
 Summary:	Header files and development documentation for %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
-Provides:	%{name}-devel libradius-devel
+Provides:	%{name}-devel = %{version}-%{release}
+Provides:	libradius-devel = %{version}-%{release}
+Obsoletes:	%{_lib}radius0-devel < 0.3.2-12
 
-%description -n	%{libname}-devel
+%description -n	%{develname}
 Header files and development documentation for %{name}.
 
-%package -n	%{libname}-static-devel
+%package -n	%{sdevelname}
 Summary:	Static libraries for %{name}
 Group:		Development/C
-Requires:	%{libname}-devel = %{version}-%{release}
+Requires:	%{develname} = %{version}-%{release}
+Provides:	%{name}-static-devel = %{version}-%{release}
+Obsoletes:	%{_lib}radius0-static-devel < 0.3.2-12
 
-%description -n	%{libname}-static-devel
+%description -n	%{sdevelname}
 %{name} static library.
 
 %prep
-
 %setup -q
 %patch0 -p1
 
 %build
-rm -rf missing configure
-export WANT_AUTOCONF_2_5=1
-libtoolize --copy --force; aclocal-1.7; autoconf; automake-1.7 --add-missing
-
+autoreconf -fi
 %configure2_5x \
     --enable-shadow \
     --enable-scp
@@ -102,13 +101,13 @@ libtoolize --copy --force; aclocal-1.7; autoconf; automake-1.7 --add-missing
 %defattr(-,root,root)
 %attr(755,root,root) %{_libdir}/lib*.so.*
 
-%files -n %{libname}-devel
+%files -n %{develname}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
 %attr(755,root,root) %{_libdir}/lib*.la
 %{_includedir}/*
 
-%files -n %{libname}-static-devel
+%files -n %{sdevelname}
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
 
