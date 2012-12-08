@@ -6,13 +6,12 @@
 Summary:	Radiusclient library and tools
 Name:		radiusclient
 Version:	0.3.2
-Release:	%mkrel 15
+Release:	%mkrel 17
 License:	BSD
 Group:		System/Libraries
 URL:		ftp://ftp.cityline.net/pub/radiusclient/
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		%{name}-am_ac.patch
-BuildRoot:	%{_tmppath}/%{name}-%{version}-root
 
 %description
 Radiusclient is a /bin/login replacement which gets called by a getty
@@ -75,20 +74,7 @@ autoreconf -fi
 %make
 
 %install
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
-
 %makeinstall_std
-
-%if %mdkversion < 200900
-%post -n %{libname} -p /sbin/ldconfig
-%endif
-
-%if %mdkversion < 200900
-%postun -n %{libname} -p /sbin/ldconfig
-%endif
-
-%clean
-[ "%{buildroot}" != "/" ] && rm -rf %{buildroot}
 
 %files -n %{name}-utils
 %defattr(644,root,root,755)
@@ -104,11 +90,71 @@ autoreconf -fi
 %files -n %{develname}
 %defattr(644,root,root,755)
 %attr(755,root,root) %{_libdir}/lib*.so
-%attr(755,root,root) %{_libdir}/lib*.la
 %{_includedir}/*
 
 %files -n %{sdevelname}
 %defattr(644,root,root,755)
 %{_libdir}/lib*.a
 
+
+
+
+%changelog
+* Thu May 05 2011 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-15mdv2011.0
++ Revision: 669399
+- mass rebuild
+
+* Fri Dec 03 2010 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-14mdv2011.0
++ Revision: 607297
+- rebuild
+
+* Sun Mar 14 2010 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-13mdv2010.1
++ Revision: 519063
+- rebuild
+
+* Sun Oct 04 2009 Funda Wang <fwang@mandriva.org> 0.3.2-12mdv2010.0
++ Revision: 453297
+- new devel package policy
+
+  + Christophe Fergeau <cfergeau@mandriva.com>
+    - rebuild
+
+* Mon Dec 22 2008 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-10mdv2009.1
++ Revision: 317539
+- rebuild
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - rebuild
+
+  + Pixel <pixel@mandriva.com>
+    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
+
+* Wed Mar 05 2008 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-8mdv2008.1
++ Revision: 179412
+- rebuild
+
+  + Olivier Blin <oblin@mandriva.com>
+    - restore BuildRoot
+
+  + Thierry Vignaud <tv@mandriva.org>
+    - kill re-definition of %%buildroot on Pixel's request
+
+
+* Wed Mar 07 2007 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-7mdv2007.0
++ Revision: 134454
+- Import radiusclient
+
+* Wed Mar 07 2007 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-7mdv2007.1
+- use the %%mkrel macro
+- bunzip patches
+
+* Sun Dec 25 2005 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-6mdk
+- rebuild
+
+* Sat Oct 16 2004 Oden Eriksson <oeriksson@mandrakesoft.com> 0.3.2-5mdk
+- fix deps
+
+* Sat Oct 16 2004 Oden Eriksson <oeriksson@mandrakesoft.com> 0.3.2-4mdk
+- rebuild
+- misc spec file fixes
 
