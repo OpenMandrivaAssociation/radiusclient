@@ -12,6 +12,7 @@ Group:		System/Libraries
 URL:		ftp://ftp.cityline.net/pub/radiusclient/
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		%{name}-am_ac.patch
+Patch1:		%name-automake-1.13.patch
 
 %description
 Radiusclient is a /bin/login replacement which gets called by a getty
@@ -63,7 +64,7 @@ Obsoletes:	%{_lib}radius0-static-devel < 0.3.2-12
 
 %prep
 %setup -q
-%patch0 -p1
+%apply_patches
 
 %build
 autoreconf -fi
