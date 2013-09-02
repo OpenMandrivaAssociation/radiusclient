@@ -69,6 +69,7 @@ Obsoletes:	%{_lib}radius0-static-devel < 0.3.2-12
 %build
 autoreconf -fi
 %configure2_5x \
+    --enable-static \
     --enable-shadow \
     --enable-scp
 
