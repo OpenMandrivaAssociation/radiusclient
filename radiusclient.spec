@@ -6,7 +6,7 @@
 Summary:	Radiusclient library and tools
 Name:		radiusclient
 Version:	0.3.2
-Release:	20
+Release:	21
 License:	BSD
 Group:		System/Libraries
 URL:		ftp://ftp.cityline.net/pub/radiusclient/
