@@ -1,18 +1,18 @@
-%define	major 0
-%define libname	%mklibname radius %{major}
-%define develname %mklibname radius -d
-%define sdevelname %mklibname radius -d -s
+%define major 0
+%define libname %mklibname %{name} %{major}
+%define devname %mklibname %{name} -d
+%define sdevname %mklibname %{name} -ds
 
 Summary:	Radiusclient library and tools
 Name:		radiusclient
 Version:	0.3.2
-Release:	21
+Release:	22
 License:	BSD
 Group:		System/Libraries
-URL:		ftp://ftp.cityline.net/pub/radiusclient/
+Url:		ftp://ftp.cityline.net/pub/radiusclient/
 Source0:	%{name}-%{version}.tar.bz2
 Patch0:		%{name}-am_ac.patch
-Patch1:		%name-automake-1.13.patch
+Patch1:		%{name}-automake-1.13.patch
 
 %description
 Radiusclient is a /bin/login replacement which gets called by a getty
@@ -37,41 +37,41 @@ authenticate the user.
 %package -n	%{libname}
 Summary:	Radiusclient library
 Group:          System/Libraries
+%rename		%{_lib}radius0
 
 %description -n	%{libname}
 Libraries required for Radiusclient
 
-%package -n	%{develname}
+%package -n	%{devname}
 Summary:	Header files and development documentation for %{name}
 Group:		Development/C
 Requires:	%{libname} = %{version}-%{release}
 Provides:	%{name}-devel = %{version}-%{release}
-Provides:	libradius-devel = %{version}-%{release}
-Obsoletes:	%{_lib}radius0-devel < 0.3.2-12
+%rename		%{_lib}radius-devel
 
-%description -n	%{develname}
+%description -n	%{devname}
 Header files and development documentation for %{name}.
 
-%package -n	%{sdevelname}
+%package -n	%{sdevname}
 Summary:	Static libraries for %{name}
 Group:		Development/C
-Requires:	%{develname} = %{version}-%{release}
+Requires:	%{devname} = %{version}-%{release}
 Provides:	%{name}-static-devel = %{version}-%{release}
-Obsoletes:	%{_lib}radius0-static-devel < 0.3.2-12
+%rename		%{_lib}radius-static-devel
 
-%description -n	%{sdevelname}
+%description -n	%{sdevname}
 %{name} static library.
 
 %prep
 %setup -q
 %apply_patches
+autoreconf -fi
 
 %build
-autoreconf -fi
 %configure2_5x \
-    --enable-static \
-    --enable-shadow \
-    --enable-scp
+	--enable-static \
+	--enable-shadow \
+	--enable-scp
 
 %make
 
@@ -86,77 +86,12 @@ autoreconf -fi
 %attr(755,root,root) %{_sbindir}/*
 
 %files -n %{libname}
-%defattr(-,root,root)
-%attr(755,root,root) %{_libdir}/lib*.so.*
+%{_libdir}/libradiusclient.so.%{major}*
 
-%files -n %{develname}
-%defattr(644,root,root,755)
-%attr(755,root,root) %{_libdir}/lib*.so
+%files -n %{devname}
+%{_libdir}/libradiusclient.so
 %{_includedir}/*
 
-%files -n %{sdevelname}
-%defattr(644,root,root,755)
-%{_libdir}/lib*.a
-
-
-
-
-%changelog
-* Thu May 05 2011 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-15mdv2011.0
-+ Revision: 669399
-- mass rebuild
-
-* Fri Dec 03 2010 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-14mdv2011.0
-+ Revision: 607297
-- rebuild
-
-* Sun Mar 14 2010 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-13mdv2010.1
-+ Revision: 519063
-- rebuild
-
-* Sun Oct 04 2009 Funda Wang <fwang@mandriva.org> 0.3.2-12mdv2010.0
-+ Revision: 453297
-- new devel package policy
-
-  + Christophe Fergeau <cfergeau@mandriva.com>
-    - rebuild
-
-* Mon Dec 22 2008 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-10mdv2009.1
-+ Revision: 317539
-- rebuild
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - rebuild
-
-  + Pixel <pixel@mandriva.com>
-    - do not call ldconfig in %%post/%%postun, it is now handled by filetriggers
-
-* Wed Mar 05 2008 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-8mdv2008.1
-+ Revision: 179412
-- rebuild
-
-  + Olivier Blin <oblin@mandriva.com>
-    - restore BuildRoot
-
-  + Thierry Vignaud <tv@mandriva.org>
-    - kill re-definition of %%buildroot on Pixel's request
-
-
-* Wed Mar 07 2007 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-7mdv2007.0
-+ Revision: 134454
-- Import radiusclient
-
-* Wed Mar 07 2007 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-7mdv2007.1
-- use the %%mkrel macro
-- bunzip patches
-
-* Sun Dec 25 2005 Oden Eriksson <oeriksson@mandriva.com> 0.3.2-6mdk
-- rebuild
-
-* Sat Oct 16 2004 Oden Eriksson <oeriksson@mandrakesoft.com> 0.3.2-5mdk
-- fix deps
-
-* Sat Oct 16 2004 Oden Eriksson <oeriksson@mandrakesoft.com> 0.3.2-4mdk
-- rebuild
-- misc spec file fixes
+%files -n %{sdevname}
+%{_libdir}/libradiusclient.a
 
