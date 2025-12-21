@@ -14,6 +14,11 @@ Source0:	%{name}-%{version}.tar.bz2
 Patch0:		%{name}-am_ac.patch
 Patch1:		%{name}-automake-1.13.patch
 
+BuildRequires:	autoconf
+BuildRequires:	automake
+BuildRequires:	libtool-base
+BuildRequires:	slibtool
+BuildRequires:	make
 %description
 Radiusclient is a /bin/login replacement which gets called by a getty
 to log in a user and to setup the user's login environment. Normal
