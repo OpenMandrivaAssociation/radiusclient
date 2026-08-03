@@ -5,12 +5,12 @@
 
 Summary:	Radiusclient library and tools
 Name:		radiusclient
-Version:	0.3.2
-Release:	30
+Version:	0.5.6
+Release:	1
 License:	BSD
 Group:		System/Libraries
-Url:		ftp://ftp.cityline.net/pub/radiusclient/
-Source0:	%{name}-%{version}.tar.bz2
+Url:		https://sourceforge.net/projects/radiusclient-ng.berlios/
+Source0:	https://downloads.sourceforge.net/project/radiusclient-ng.berlios/radiusclient-ng-%{version}.tar.gz
 Patch0:		%{name}-am_ac.patch
 Patch1:		%{name}-automake-1.13.patch
 
@@ -68,7 +68,7 @@ Provides:	%{name}-static-devel = %{version}-%{release}
 %{name} static library.
 
 %prep
-%setup -q
+%setup -q -n radiusclient-ng-%{version}
 %autopatch -p1
 autoreconf -fi
 

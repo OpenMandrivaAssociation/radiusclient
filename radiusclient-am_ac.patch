@@ -1,28 +1,11 @@
-diff -urN radiusclient-0.3.2.org/configure.in radiusclient-0.3.2/configure.in
---- radiusclient-0.3.2.org/configure.in	Sat Aug 10 01:44:30 2002
-+++ radiusclient-0.3.2/configure.in	Sat Aug 10 01:47:34 2002
-@@ -179,7 +179,6 @@
- AC_SUBST(RC_LOG_FACILITY)
+--- radiusclient-ng-0.5.6/configure.in
++++ radiusclient-ng-0.5.6/configure.in
+@@ -215,8 +215,6 @@
+ #undef VERSION])
  
  AM_CONFIG_HEADER(config.h)
--LTLIBOBJS=`echo "$LIBOBJS" | sed 's/\.o/.lo/g'`
- AC_SUBST(LTLIBOBJS)
- AC_OUTPUT([
+-dnl LTLIBOBJS=`echo "$LIB@&t@OBJS" | sed 's,\.[[^.]]* ,.lo ,g;s,\.[[^.]]*$,.lo,'`
+-dnl AC_SUBST(LTLIBOBJS)
+ AC_CONFIG_FILES([
  Makefile
-diff -urN radiusclient-0.3.2.org/etc/Makefile.am radiusclient-0.3.2/etc/Makefile.am
---- radiusclient-0.3.2.org/etc/Makefile.am	Sat Aug 10 01:44:30 2002
-+++ radiusclient-0.3.2/etc/Makefile.am	Sat Aug 10 01:50:02 2002
-@@ -26,9 +26,9 @@
- 	    <$(srcdir)/radiusclient.conf.in >radiusclient.conf
- 
- install-data-local: servers
--	$(mkinstalldirs) $(pkgsysconfdir); \
--        echo " $(INSTALL) -m600 $(srcdir)/servers $(pkgsysconfdir)/servers"; \
--        $(INSTALL) -m600 $(srcdir)/servers $(pkgsysconfdir)/servers
-+	$(mkinstalldirs) $(DESTDIR)$(pkgsysconfdir); \
-+        echo " $(INSTALL) -m600 $(srcdir)/servers $(DESTDIR)$(pkgsysconfdir)/servers"; \
-+        $(INSTALL) -m600 $(srcdir)/servers $(DESTDIR)$(pkgsysconfdir)/servers
- 
- uninstall-local:
--	rm -f $(pkgsysconfdir)/servers
-+	rm -f $(DESTDIR)$(pkgsysconfdir)/servers
+ include/Makefile lib/Makefile src/Makefile man/Makefile etc/Makefile
